@@ -30,8 +30,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./chr-entry/sites-enabled:/etc/nginx/conf.d
-      - ./chr-entry/certs:/etc/nginx/certs
+      - ./certs:/etc/nginx/certs
     depends_on:
       - chr-data
       - chorserv-server-site-bundle
