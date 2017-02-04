@@ -1,0 +1,44 @@
+version: '2'
+services:
+  chorserv-server-site-bundle:
+    build: chr-serv/
+    image: chr-serv
+    restart: always
+    volumes_from:
+      - chr-data
+  chr-cms:
+    build: chr-cms/
+    image: chr-cms
+    restart: always
+    volumes_from:
+      - chr-data
+    depends_on:
+      - chr-data
+      - chorserv-server-site-bundle
+  chr-data:
+    image: chr-data:latest
+    volumes:
+      - /data
+      - /Servertools
+      - /bilderStrukturen
+    build: chr-data/
+    command: /bin/true
+  chr-entry:
+    image: chr-entry
+    build: chr-entry/
+    restart: always
+    expose:
+      - "80"
+      - "443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./chr-entry/sites-enabled:/etc/nginx/conf.d
+      - ./chr-entry/certs:/etc/nginx/certs
+    depends_on:
+      - chr-data
+      - chorserv-server-site-bundle
+      - chr-cms
+    
+    
