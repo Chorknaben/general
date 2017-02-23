@@ -1,0 +1,22 @@
+version: '2'
+services:
+  chorserv-server-site-bundle-staging:
+    image: chr-serv
+    restart: always
+    volumes_from:
+      - chr-data-staging
+  chr-cms-staging:
+    image: chr-cms
+    restart: always
+    volumes_from:
+      - chr-data-staging
+    depends_on:
+      - chr-data-staging
+      - chorserv-server-site-bundle-staging
+  chr-data-staging:
+    image: chr-data:latest
+    volumes:
+      - /data
+      - /Servertools
+      - /bilderStrukturen
+    command: /bin/true
