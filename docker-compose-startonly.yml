@@ -30,7 +30,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certs:/etc/nginx/certs
+      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - chr-data
       - chorserv-server-site-bundle
